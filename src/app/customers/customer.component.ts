@@ -39,6 +39,7 @@ function emailMatcher(c: AbstractControl): { [key: string]: boolean } | null {
   styleUrls: ['./customer.component.css'],
 })
 export class CustomerComponent implements OnInit {
+[x: string]: any;
   customerForm!: FormGroup;
   customer = new Customer();
   emailMessage!: string;
@@ -65,6 +66,7 @@ export class CustomerComponent implements OnInit {
       notification: 'email',
       rating: [null, ratingRange(1, 5)],
       sendCatalog: true,
+      adresses: this.buildAddress()
     });
 
     this.customerForm
@@ -79,6 +81,17 @@ export class CustomerComponent implements OnInit {
     emailControl?.valueChanges
       .pipe(debounceTime(1000))
       .subscribe((value) => this.setMessage(emailControl));
+  }
+
+  buildAddress():FormGroup{
+    return this.fb.group({
+      addressType: 'home',
+      street1: '',
+      street2: '',
+      city:'',
+      state:'',
+      zip:''
+    })
   }
 
   populateTestData(): void {
